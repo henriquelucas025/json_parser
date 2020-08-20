@@ -7,34 +7,25 @@ void yyerror(char *c);
 int yylex(void);
 %}
 
-%token '[' ']' ',' ':' '{' '}' '"' INT FLO STR '\n'
+%token '[' ']' ',' ':' '{' '}' '"' NUM STR '\n'
 
 %%
 S: 
- J '\n' { printf("VALIDO\n"); }
-
-
-J:
- '{' C '}' {}
- | '[' C ']' {}
+ A '\n' { printf("VALIDO\n"); }
  ;
 
-C:
- A {}
- |
- ;
+
 
 A:
- INT {}
- | A '\n' {}
- | '\n' A {}
+ NUM {}
  | '"' STR '"' {}
- | A ',' A {}
- | A ':' A {}
- | J {}
- | FLO {}
+ | A ',' A     {}
+ | A ':' A     {}
+ | A '\n'      {}
+ | '{' A '}'   {}
+ | '[' A ']'   {}
+ |
  ;
-
 %%
 
 void yyerror(char *s) {

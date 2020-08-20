@@ -7,9 +7,11 @@ void yyerror(char *);
 
 %}
 
-digit [0-9]
-INTEIRO {digit}+
-FLOAT ({digit}*[.]{digit}+)
+ESP    [[:space:]]*
+digit  [0-9]
+NUMERO ({digit}*[.]*{digit}+)
+ST     [A-Za-z]+[0-9]*
+STRING ({ST}+{ESP}{ST}*)
 
 %%
 
@@ -23,13 +25,13 @@ FLOAT ({digit}*[.]{digit}+)
 [,] { return ','; }
 
 
-{INTEIRO} { return INT; }
-{FLOAT} { return FLO; }
-[A-Za-z]+ {return STR; }
+{NUMERO} { return NUM; }
+{STRING} {return STR; }
 
 
-\" { return '"'; }
+\"     { return '"'; }
 [\n]   { return '\n'; }
+
 
 
 [[:space:]]+ ;
